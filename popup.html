@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Popup Notes
+    </title>
+    <script src="popup.js"></script>
+    <style media="screen">
+      textarea {
+        width: 350px;
+        height: 200px;
+        background: #fefefe;
+        /*border: solid 1px #ddd;*/
+        border: 0;
+        outline: 0;
+        font-size: 15px;
+        font-family: sans-serif;
+        padding: 10px;
+        color: #222;
+      }
+      textarea:focus {
+        /*border: solid 1px #ccc;*/
+      }
+      body {
+        /*background: #fafafa;*/
+        padding: 0px;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea type="text" id="notes-popup" autofocus tabindex="1" /></textarea>
+  </body>
+</html>
