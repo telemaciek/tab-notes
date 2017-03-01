@@ -36,7 +36,7 @@ function initiateNote() {
       case (content === "\n"):
       case (content === "\n\n"):
       case (content === "\n\n\n"):
-        document.title = "UGH";
+        document.title = "Note";
         break;
       case (newlineIndex <= 0):
         document.title = content.substring(0,20);
