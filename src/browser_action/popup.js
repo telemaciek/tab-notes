@@ -1,4 +1,4 @@
-function popup() {
+function selectText() {
   document.getElementById('specials').select();
 }
-window.onload = popup;
+window.onload = selectText;

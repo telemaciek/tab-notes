@@ -1,4 +1,4 @@
-function note() {
+function initiateNote() {
   var noteContainer = document.getElementById('note-container');
   var noteId = window.location.hash.substring(1);
 
@@ -22,13 +22,13 @@ function note() {
     localStorage.setItem(noteId, JSON.stringify(noteContent));
   }
 
-  function autoSave() {
+  function startAutosaving() {
     noteContainer.onkeyup = function(e) {
       saveNote(noteId, e.target.value)
     }
   }
 
   showNote(noteId);
-  autoSave(); // Launch autosaving
+  startAutosaving(); // Launch autosaving
 }
-window.addEventListener('load', note);
+window.addEventListener('load', initiateNote);
