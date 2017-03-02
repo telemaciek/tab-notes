@@ -3,10 +3,11 @@ function initiateNote() {
   var noteId = window.location.hash.substring(1);
 
   function loadNote(noteId) {
-    var noteContent;
-    var localStorageNote = localStorage.getItem(noteId);
-    if (localStorageNote != null) {
-      noteContent = JSON.parse(localStorageNote);
+    var noteContent = "";
+    var notesJsonString = localStorage.getItem("notesStorage");
+    if (notesJsonString != null) {
+      notesJson = JSON.parse(notesJsonString);
+      noteContent = notesJson[noteId];
     }
     return noteContent;
   }
@@ -19,8 +20,13 @@ function initiateNote() {
   }
 
   function saveNote(noteId, noteContent) {
-    localStorage.setItem(noteId, JSON.stringify(noteContent));
-
+    var notesJsonString = localStorage.getItem("notesStorage");
+    var notesJson = {};
+    if (notesJsonString != null) {
+      notesJson = JSON.parse(notesJsonString);
+    }
+    notesJson[noteId] = noteContent;
+    localStorage.setItem('notesStorage', JSON.stringify(notesJson));
   }
 
   function startAutosaving() {
