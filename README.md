@@ -1,7 +1,9 @@
 # Tab Notes
 
+✔ Start writing as quickly as you can smash _cmd+t, return_
+
 ✔ Write a different note in each tab
 
-✔ Keep your notes saved in _localStorage_
+✔ First line is your note title
 
-✔ Start writing almost immediately after opening a new tab (as quickly as you can smash cmd+t, return)
+✔ Keep your notes secure, saved in your browser's _localStorage_
