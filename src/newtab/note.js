@@ -20,6 +20,7 @@ function initiateNote() {
 
   function saveNote(noteId, noteContent) {
     localStorage.setItem(noteId, JSON.stringify(noteContent));
+
   }
 
   function startAutosaving() {
@@ -38,14 +39,14 @@ function initiateNote() {
       case (content === "\n\n\n"):
         document.title = "Note";
         break;
-      case (content.length > 20):
-        document.title = content.substring(0,20) + "...";
-        break;
       case (newlineIndex <= 0):
         document.title = content.substring(0,20);
         break;
       case (newlineIndex <= 20):
         document.title = content.substring(0,newlineIndex);
+        break;
+      case (content.length > 20):
+        document.title = content.substring(0,20) + "...";
         break;
       case (newlineIndex > 20):
         document.title = content.substring(0,20) + "...";
