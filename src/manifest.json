@@ -1,6 +1,6 @@
 {
   "name": "Tab Notes",
-  "description": "",
+  "description": "Unique notes in place of every new tab.",
   "version": "0.1",
   "manifest_version": 2,
   "icons": {
