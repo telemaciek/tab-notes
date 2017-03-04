@@ -33,6 +33,7 @@ function initiateNote() {
     noteContainer.onkeyup = function(e) {
       saveNote(noteId, e.target.value);
       setDocumentTitle(e.target.value);
+      setProperFavicon(e.target.value.length);
     }
   }
 
@@ -60,8 +61,56 @@ function initiateNote() {
     }
   }
 
+  function startFaviconChanging() {
+    // window.addEventListener('focus', function() {
+      // Change into normal icon
+      // changeFavicon('empty-starred');
+    // });
+    // window.addEventListener('blur', function() {
+      // Change into a more dark-background-friendly icon
+      // changeFavicon('empty');
+    // });
+  }
+  function changeFavicon(state) {
+    var link = document.querySelector("link[rel*='icon']");
+    link.type = 'image/png';
+    link.rel = 'icon';
+    link.href = 'favicon/' + state + '.png';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+  function setProperFavicon(noteTextLength) {
+    console.log("Character count: " + noteTextLength);
+    switch (true) {
+      case (noteTextLength === 0):
+        changeFavicon('empty');
+        console.log('empty' + noteTextLength)
+        break;
+      case (noteTextLength < 20):
+        changeFavicon('1line');
+        break;
+      case (noteTextLength < 80):
+        changeFavicon('2lines');
+        break;
+      case (noteTextLength < 160):
+        changeFavicon('3lines');
+        break;
+      case (noteTextLength < 300):
+        changeFavicon('4lines');
+        break;
+      case (noteTextLength < 480):
+        changeFavicon('5lines');
+        break;
+      default:
+        changeFavicon('full');
+        break;
+    }
+  }
+
   showNote(noteId);
   setDocumentTitle(noteContainer.value);
-  startAutosaving(); // Launch autosaving
+  setProperFavicon(noteContainer.value.length);
+  startAutosaving(); // Launch autosaving... also start changing title and favicon
+  startFaviconChanging(); // Change favicon based on if window is focused
+
 }
 window.addEventListener('load', initiateNote);
