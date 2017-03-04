@@ -31,9 +31,10 @@ function initiateNote() {
 
   function startAutosaving() {
     noteContainer.onkeyup = function(e) {
-      saveNote(noteId, e.target.value);
-      setDocumentTitle(e.target.value);
-      setProperFavicon(e.target.value.length);
+      var noteText = e.target.value;
+      saveNote(noteId, noteText);
+      setDocumentTitle(noteText);
+      setProperFavicon(noteText.length);
     }
   }
 
