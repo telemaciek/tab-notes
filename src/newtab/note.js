@@ -84,21 +84,20 @@ function initiateNote() {
     switch (true) {
       case (noteTextLength === 0):
         changeFavicon('empty');
-        console.log('empty' + noteTextLength)
         break;
       case (noteTextLength < 20):
         changeFavicon('1line');
         break;
-      case (noteTextLength < 80):
+      case (noteTextLength < 150):
         changeFavicon('2lines');
         break;
-      case (noteTextLength < 160):
+      case (noteTextLength < 450):
         changeFavicon('3lines');
         break;
-      case (noteTextLength < 300):
+      case (noteTextLength < 650):
         changeFavicon('4lines');
         break;
-      case (noteTextLength < 480):
+      case (noteTextLength < 800):
         changeFavicon('5lines');
         break;
       default:
