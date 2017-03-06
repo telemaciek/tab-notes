@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+}
+textarea {
+  width: 250px;
+  height: 60px;
+  background: #fefefe;
+  /*border: solid 1px #ddd;*/
+  border: 0;
+  outline: 0;
+  font-size: 15px;
+  font-family: sans-serif;
+  padding: 10px;
+  color: #222;
+}
+textarea:focus {
+  /*border: solid 1px #ccc;*/
+}
+body {
+  padding: 0px;
+  margin: 0;
+}
+.export-link {
+  display: block;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  text-decoration: none;
+  margin: 10px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  background: #ADF9BA;
+  color: #225B96;
+}
+.export-link:hover {
+  opacity: 1;
+}
+.export-link:active {
+  background: #90E99F;
+}
+.note-container {
+  margin: 10px;
+  padding: 20px;
+  background: rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+.note-delete {
+  display: block;
+  float: right;
+  width: 50px;
+  height: 40px;
+  background: rgba(255,0,0,0.1);
+  cursor: pointer;
+}
