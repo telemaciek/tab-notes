@@ -1,12 +1,10 @@
 {
   "name": "Tab Notes",
-  "description": "Unique notes in place of every new tab.",
+  "description": "Notes in place of every new tab",
   "version": "0.1",
   "manifest_version": 2,
   "icons": {
     "16": "images/icon_16.png",
-    "32": "images/icon_32.png",
-    "48": "images/icon_48.png",
     "128": "images/icon_128.png"
   },
   "chrome_url_overrides" : {
@@ -15,7 +13,7 @@
   "browser_action": {
     "default_popup": "browser_action/popup.html",
     "default_icon": {
-      "16": "images/notes.png"
+      "16": "images/notes-48.png"
     }
   }
 }
