@@ -28,7 +28,7 @@ function initiatePopup() {
     for (key in notesJson) {
       note = notesJson[key];
       // console.log(note + key);
-      x += "<div class='note-container'><a href='/newtab/note.html#" + key + "'>";
+      x += "<div class='note-container'><a href='/newtab/note.html#" + key + "' target='" + key + "'>";
       x += "" + note + "";
       x += "</a><span class='note-delete js-note-delete' data-note-id='" + key + "'>DELETE</span></div>";
     }
@@ -48,14 +48,9 @@ function initiatePopup() {
   function deleteNote() {
     var notesJsonString = localStorage.getItem("notesStorage");
     var notesJson = JSON.parse(notesJsonString);
-
     var noteId = this.getAttribute('data-note-id');
-    console.log(notesJson[noteId]);
     delete notesJson[noteId];
-    console.log(notesJson[noteId]);
-
-    localStorage.setItem('notesStorage', JSON.stringify(notesJson));    
-
+    localStorage.setItem('notesStorage', JSON.stringify(notesJson));
     listNotes();
   }
 
