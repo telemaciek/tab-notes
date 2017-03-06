@@ -27,16 +27,38 @@ function initiatePopup() {
 
     for (key in notesJson) {
       note = notesJson[key];
-      console.log(note + key);
-      x += "<a href='/newtab/note.html#" + key + "'>";
-      x += "<div class='note'>" + note + "</div>";
-      x += "</a>";
+      // console.log(note + key);
+      x += "<div class='note-container'><a href='/newtab/note.html#" + key + "'>";
+      x += "" + note + "";
+      x += "</a><span class='note-delete js-note-delete' data-note-id='" + key + "'>DELETE</span></div>";
     }
-    console.log(x);
 
     notesContainer.innerHTML = x;
+    bindDelete();
   }
   listNotes();
+
+  function bindDelete() {
+    var deleteButtons = document.getElementsByClassName('js-note-delete');
+    for (var i=0; i < deleteButtons.length; i++) {
+      console.log('x');
+      deleteButtons[i].addEventListener('click', deleteNote);
+    };
+  }
+  function deleteNote() {
+    var notesJsonString = localStorage.getItem("notesStorage");
+    var notesJson = JSON.parse(notesJsonString);
+
+    var noteId = this.getAttribute('data-note-id');
+    console.log(notesJson[noteId]);
+    delete notesJson[noteId];
+    console.log(notesJson[noteId]);
+
+    localStorage.setItem('notesStorage', JSON.stringify(notesJson));    
+
+    listNotes();
+  }
+
 }
 
 window.onload = initiatePopup;
