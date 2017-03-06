@@ -17,6 +17,26 @@ function initiatePopup() {
     exportJsonLink.addEventListener('click', downloadExport);
   }
   exportJson();
+
+  function listNotes() {
+    var notesJsonString = localStorage.getItem("notesStorage");
+    var notesJson = JSON.parse(notesJsonString);
+    var notesContainer = document.getElementById("notesList");
+
+    var x = "";
+
+    for (key in notesJson) {
+      note = notesJson[key];
+      console.log(note + key);
+      x += "<a href='/newtab/note.html#" + key + "'>";
+      x += "<div class='note'>" + note + "</div>";
+      x += "</a>";
+    }
+    console.log(x);
+
+    notesContainer.innerHTML = x;
+  }
+  listNotes();
 }
 
 window.onload = initiatePopup;

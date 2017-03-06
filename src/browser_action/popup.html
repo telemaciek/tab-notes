@@ -47,9 +47,17 @@
       .export-link:active {
         background: #90E99F;
       }
+      .note {
+        margin: 10px;
+        padding: 20px;
+        background: rgba(0,0,0,0.1);
+      }
     </style>
   </head>
   <body>
+    <div id="notesList">
+    </div>
+    <a href="/newtab/note.html#123" target="123">123</a>
     <textarea type="text" id="specials" autofocus />✔✓←→★☆✗✘✖•⬇⬆✎♠♦♣♥♀♂✈«»‹›❝❞∞≈π×</textarea>
     <a href="#" id="exportJsonLink" class="export-link" download="backup.json">
       Export notes JSON
