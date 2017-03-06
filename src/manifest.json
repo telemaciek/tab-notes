@@ -13,6 +13,9 @@
     "newtab": "newtab/newtab.html"
   },
   "browser_action": {
-    "default_popup": "browser_action/popup.html"
+    "default_popup": "browser_action/popup.html",
+    "default_icon": {
+      "16": "images/notes.png"
+    }
   }
 }
