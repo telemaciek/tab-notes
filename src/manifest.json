@@ -1,10 +1,10 @@
 {
   "name": "Tab Notes",
   "description": "Notes in place of every new tab",
-  "version": "0.1",
+  "version": "0.2",
   "manifest_version": 2,
   "icons": {
-    "16": "images/icon_16.png",
+    "16": "images/notes-16.png",
     "128": "images/icon_128.png"
   },
   "chrome_url_overrides" : {
