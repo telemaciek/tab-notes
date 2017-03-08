@@ -1,54 +1,87 @@
 * {
   box-sizing: border-box;
+  /*background: rgba(255,0,0,0.1);*/
 }
-textarea {
-  width: 250px;
-  height: 60px;
-  background: #fefefe;
-  /*border: solid 1px #ddd;*/
-  border: 0;
-  outline: 0;
-  font-size: 15px;
-  font-family: sans-serif;
-  padding: 10px;
-  color: #222;
-}
-textarea:focus {
-  /*border: solid 1px #ccc;*/
-}
-body {
-  padding: 0px;
+html, body {
+  padding: 0;
   margin: 0;
 }
-.export-link {
-  display: block;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  text-decoration: none;
-  margin: 10px;
-  opacity: 0.8;
-  transition: opacity 0.2s;
-  background: #ADF9BA;
-  color: #225B96;
+body {
+  font-size: 14px;
+  min-height: 200px;
+  padding-bottom: 50px;
 }
-.export-link:hover {
-  opacity: 1;
-}
-.export-link:active {
-  background: #90E99F;
-}
-.note-container {
-  margin: 10px;
+
+.notes-list {
   padding: 20px;
-  background: rgba(0,0,0,0.1);
-  overflow: hidden;
+  min-width: 400px;
+  max-width: 600px;
+  min-height: 50px;
+  margin: 0 auto;
 }
-.note-delete {
-  display: block;
-  float: right;
-  width: 50px;
-  height: 40px;
-  background: rgba(255,0,0,0.1);
+
+.note-container {
+  background: #f9f9f9;
+  display:flex;
+  flex-direction: row;
   cursor: pointer;
+  margin-bottom: 1px;
+  transition: background-color 0.1s;
+}
+  .note-container:hover {
+    background-color: #f3f3f3;
+  }
+.note {
+  display:flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 10px 10px 10px 16px;
+  min-height: 48px;
+  min-width: 0;
+  text-decoration: none;
+  color: #222;
+}
+  .note-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 1;
+  }
+  .note-extra {
+    font-size: 12px;
+    opacity: 0.8;
+    padding-top: 2px;
+  }
+.note-actions {
+  display: flex;
+  flex-direction: row;
+}
+  .note-pin {
+    padding: 12px;
+    min-width: 48px;
+    text-align: center;
+    display: none;
+  }
+  .note-delete {
+    padding: 12px;
+    min-width: 48px;
+    text-align: center;
+    transition: border-radius 0.4s, background-color 0.2s;
+    border-radius: 20px;
+  }
+  .note-delete:hover {
+    background-color: rgba(255,0,0,0.1);
+    border-radius: 0px;
+  }
+
+
+.footer-links {
+  background: rgba(0,0,0,0.1);
+  position: fixed;
+  height: 44px;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  line-height: 44px;
 }

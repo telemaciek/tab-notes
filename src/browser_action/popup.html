@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="../images/notes.png" />
+    <link rel="icon" type="image/png" href="../images/notes-48.png" />
     <title>
       Popup Notes
     </title>
@@ -10,12 +10,15 @@
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-    <div id="notesList">
+    
+    <div id="notesList" class="notes-list">
     </div>
-    <a href="/newtab/note.html#123" target="123">123</a>
-    <textarea type="text" id="specials" autofocus />✔✓←→★☆✗✘✖•⬇⬆✎♠♦♣♥♀♂✈«»‹›❝❞∞≈π×</textarea>
-    <a href="#" id="exportJsonLink" class="export-link" download="backup.json">
-      Export notes JSON
-    </a>
+
+    <!-- <textarea type="text" id="specials" autofocus />✔✓←→★☆✗✘✖•⬇⬆✎♠♦♣♥♀♂✈«»‹›❝❞∞≈π×</textarea> -->
+    <div class="footer-links">
+      <a href="#" id="exportJsonLink" class="export-link" download="backup.json">
+        Export notes JSON
+      </a>
+    </div>
   </body>
 </html>

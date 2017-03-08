@@ -2,7 +2,7 @@ function initiatePopup() {
   function selectText() {
     document.getElementById('specials').select();
   }
-  selectText();
+  // selectText();
 
   function exportJson() {
     var exportJsonLink = document.getElementById('exportJsonLink');
@@ -28,9 +28,24 @@ function initiatePopup() {
     for (key in notesJson) {
       note = notesJson[key];
       // console.log(note + key);
-      x += "<div class='note-container'><a href='/newtab/note.html#" + key + "' target='" + key + "'>";
-      x += "" + note + "";
-      x += "</a><span class='note-delete js-note-delete' data-note-id='" + key + "'>DELETE</span></div>";
+      x += "<div class='note-container'>"
+        + "<a href='/newtab/note.html#" + key + "' target='" + key + "' class='note'>"
+        + "<div class='note-content'>"
+        + note
+        + "</div>"
+        + "<div class='note-extra'>"
+        + "Lorem ipsum?"
+        + "</div>"
+        + "</a>"
+        + "<div class='note-actions'>"
+        + "<div class='note-pin'>"
+        + "✨"
+        + "</div>"
+        + "<div class='note-delete js-note-delete' data-note-id='" + key + "'>"
+        + "❌"
+        + "</div>"
+        + "</div>"
+        + "</div>";
     }
 
     notesContainer.innerHTML = x;
