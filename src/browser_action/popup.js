@@ -1,4 +1,9 @@
 function initiatePopup() {
+
+  if (window.location.hash.substring(1) == 'default') {
+    document.getElementById('popupPage').className = 'default';
+  }
+
   function selectText() {
     document.getElementById('specials').select();
   }
@@ -23,7 +28,7 @@ function initiatePopup() {
     var notesJson = JSON.parse(notesJsonString);
     var notesContainer = document.getElementById("notesList");
 
-    var x = "";
+    var noteElement = "";
 
     for (key in notesJson) {
       note = notesJson[key];
@@ -33,8 +38,7 @@ function initiatePopup() {
       } else {
         noteSize = note.length + " characters"
       }
-      // console.log(note + key);
-      x += "<div class='note-container'>"
+      noteElement += "<div class='note-container'>"
         + "<a href='/newtab/note.html#" + key + "' target='" + key + "' class='note'>"
         + "<div class='note-content'>"
         + note
@@ -54,7 +58,7 @@ function initiatePopup() {
         + "</div>";
     }
 
-    notesContainer.innerHTML = x;
+    notesContainer.innerHTML = noteElement;
     bindDelete();
   }
   listNotes();
@@ -63,7 +67,6 @@ function initiatePopup() {
   function bindDelete() {
     var deleteButtons = document.getElementsByClassName('js-note-delete');
     for (var i=0; i < deleteButtons.length; i++) {
-      console.log('x');
       deleteButtons[i].addEventListener('click', deleteNote);
     };
   }

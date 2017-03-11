@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  /* Cool trick to make sure all your elements behave properly: */
   /*background: rgba(255,0,0,0.1);*/
 }
 html, body {
@@ -9,24 +10,31 @@ html, body {
 body {
   font-size: 13px;
   min-height: 200px;
-  /*padding: 20px 0 50px 0;*/
-  padding: 0 0 43px 0;
+  padding: 30px 0 70px 0;
   font-family: "Helvetica Neue", sans-serif;
 }
+body.default { /* When opened in popup, not separate page */
+  padding-top: 0;
+  padding-bottom: 42px;
+}
+
+/* LIST OF NOTES */
 
 .notes-list {
   margin: 0px;
-  /*min-width: 400px;*/
-  max-width: 500px;
-  /*min-height: 50px;*/
+  max-width: 640px;
   margin: 0 auto;
-  /*box-shadow: 0 0 14px 0 rgba(0,0,0,0.08);*/
-  /*border: solid 1px #f0f0f0;*/
+  border: solid 1px #f0f0f0;
   background-color: #f0f0f0;
   border-radius: 6px;
   overflow: hidden;
-  /*padding: 1px 1px 0 1px;*/
 }
+.default .notes-list { /* When opened in popup, not separate page */
+  border: 0;
+  max-width: 450px;
+}
+
+/* SINGLE */
 
 .note-container {
   background: #fff;
@@ -41,6 +49,7 @@ body {
   }
   .note-container:last-child {
     border-radius: 0 0 4px 4px;
+    margin-bottom: 0;
   }
   .note-container:hover {
     background-color: #F8F8F8;
@@ -108,6 +117,7 @@ body {
     fill: #d04202;
   }
 
+/* EXPORT LINK IN FOOTER */
 
 .footer-links {
   background: #F8F8F8;
@@ -126,14 +136,14 @@ body {
   text-decoration: none;
   color: #333;
 }
-.export-link svg {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-}
-.export-link:hover {
-  color: #1CB7E0;
-}
-.export-link:hover svg path {
-  fill: #1CB7E0;
-}
+  .export-link svg {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+  .export-link:hover {
+    color: #1CB7E0;
+  }
+    .export-link:hover svg path {
+      fill: #1CB7E0;
+    }
