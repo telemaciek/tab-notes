@@ -7,40 +7,69 @@ html, body {
   margin: 0;
 }
 body {
-  font-size: 14px;
+  font-size: 13px;
   min-height: 200px;
-  padding-bottom: 50px;
+  /*padding: 20px 0 50px 0;*/
+  padding: 0 0 43px 0;
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 .notes-list {
-  padding: 20px;
-  min-width: 400px;
-  max-width: 600px;
-  min-height: 50px;
+  margin: 0px;
+  /*min-width: 400px;*/
+  max-width: 500px;
+  /*min-height: 50px;*/
   margin: 0 auto;
+  /*box-shadow: 0 0 14px 0 rgba(0,0,0,0.08);*/
+  /*border: solid 1px #f0f0f0;*/
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  overflow: hidden;
+  /*padding: 1px 1px 0 1px;*/
 }
 
 .note-container {
-  background: #f9f9f9;
+  background: #fff;
   display:flex;
   flex-direction: row;
   cursor: pointer;
   margin-bottom: 1px;
   transition: background-color 0.1s;
 }
+  .note-container:first-child {
+    border-radius: 4px 4px 0 0;
+  }
+  .note-container:last-child {
+    border-radius: 0 0 4px 4px;
+  }
   .note-container:hover {
-    background-color: #f3f3f3;
+    background-color: #F8F8F8;
   }
 .note {
   display:flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 10px 10px 10px 16px;
+  padding: 16px 16px 16px 26px;
   min-height: 48px;
   min-width: 0;
   text-decoration: none;
   color: #222;
+  position: relative;
 }
+  .note:focus::before {
+    display: block;
+    width: 4px;
+    height: 100%;
+    background: #1CB7E0;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .note:focus {
+    outline: 0;
+    color: #337B99;
+  }
   .note-content {
     white-space: nowrap;
     overflow: hidden;
@@ -49,8 +78,8 @@ body {
     flex: 1;
   }
   .note-extra {
-    font-size: 12px;
-    opacity: 0.8;
+    font-size: 11px;
+    opacity: 0.4;
     padding-top: 2px;
   }
 .note-actions {
@@ -65,23 +94,46 @@ body {
   }
   .note-delete {
     padding: 12px;
-    min-width: 48px;
+    min-width: 61px;
     text-align: center;
+    padding: 23px;
     transition: border-radius 0.4s, background-color 0.2s;
     border-radius: 20px;
   }
   .note-delete:hover {
-    background-color: rgba(255,0,0,0.1);
+    background-color: rgba(0,0,0,0.05);
     border-radius: 0px;
+  }
+  .note-delete:hover path {
+    fill: #d04202;
   }
 
 
 .footer-links {
-  background: rgba(0,0,0,0.1);
+  background: #F8F8F8;
+  border-top: solid 1px #eee;
   position: fixed;
   height: 44px;
   width: 100%;
   bottom: 0;
   text-align: center;
   line-height: 44px;
+}
+.export-link {
+  position: relative;
+  display: inline-block;
+  padding: 0px 20px 0 40px;
+  text-decoration: none;
+  color: #333;
+}
+.export-link svg {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.export-link:hover {
+  color: #1CB7E0;
+}
+.export-link:hover svg path {
+  fill: #1CB7E0;
 }

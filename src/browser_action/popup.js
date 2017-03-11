@@ -27,6 +27,12 @@ function initiatePopup() {
 
     for (key in notesJson) {
       note = notesJson[key];
+      var noteSize;
+      if (note.length === 0) {
+        noteSize = "Empty"
+      } else {
+        noteSize = note.length + " characters"
+      }
       // console.log(note + key);
       x += "<div class='note-container'>"
         + "<a href='/newtab/note.html#" + key + "' target='" + key + "' class='note'>"
@@ -34,7 +40,7 @@ function initiatePopup() {
         + note
         + "</div>"
         + "<div class='note-extra'>"
-        + "Lorem ipsum?"
+        + noteSize
         + "</div>"
         + "</a>"
         + "<div class='note-actions'>"
@@ -42,7 +48,7 @@ function initiatePopup() {
         + "✨"
         + "</div>"
         + "<div class='note-delete js-note-delete' data-note-id='" + key + "'>"
-        + "❌"
+        + "<svg width='10px' height='10px' viewBox='0 0 10 10'><g><path d='M5,3.82352941 L1.17647059,1.5720758e-13 L6.61692923e-14,1.17647059 L3.82352941,5 L4.4408921e-13,8.82352941 L1.17647059,10 L5,6.17647059 L8.82352941,10 L10,8.82352941 L6.17647059,5 L10,1.17647059 L8.82352941,1.5720758e-13 L5,3.82352941 Z' fill='#555555'></path></g></svg>"
         + "</div>"
         + "</div>"
         + "</div>";
