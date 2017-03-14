@@ -62,16 +62,6 @@ function initiateNote() {
     }
   }
 
-  function startFaviconChanging() {
-    // window.addEventListener('focus', function() {
-      // Change into normal icon
-      // changeFavicon('empty-starred');
-    // });
-    // window.addEventListener('blur', function() {
-      // Change into a more dark-background-friendly icon
-      // changeFavicon('empty');
-    // });
-  }
   function changeFavicon(state) {
     var link = document.querySelector("link[rel*='icon']");
     link.type = 'image/png';
@@ -110,7 +100,6 @@ function initiateNote() {
   setDocumentTitle(noteContainer.value);
   setProperFavicon(noteContainer.value.length);
   startAutosaving(); // Launch autosaving... also start changing title and favicon
-  startFaviconChanging(); // Change favicon based on if window is focused
 
 }
 window.addEventListener('load', initiateNote);
