@@ -2,31 +2,91 @@ function initiateNote() {
   var noteContainer = document.getElementById('note-container');
   var noteId = window.location.hash.substring(1);
 
-  function loadNote(noteId) {
-    var noteContent = "";
-    var notesJsonString = localStorage.getItem("notesStorage");
-    if (notesJsonString != null) {
-      notesJson = JSON.parse(notesJsonString);
-      noteContent = notesJson[noteId];
-    }
-    return noteContent;
+  function newStorageObj() {
+    // Return initial json (could have example notes)
+    var json = {};
+    json.notes = {};
+    json.version = "1";
+    return json;
   }
 
-  function showNote(noteId) {
-    var noteContent = loadNote(noteId);
-    if (noteContent != undefined) {
-      noteContainer.innerHTML = noteContent;
+  function migrate() {
+    // if version
+    // if version != 1, migrate
+    // notes.noteId.key = notes.key
+    // notes.noteId.value = notes.value
+    // notes.noteId.created = now
+    // version = 1
+    // set in localStorage
+    // return json.notes
+  }
+
+  function getNotes() {
+    // get data from localStorage
+    var storageString = localStorage.getItem("notesStorage");
+
+    // change string into object
+    var storageObj = {};
+    if (storageString != null) {
+      storageObj = JSON.parse(storageString);
     }
+
+    // if version doesn't match...
+    if (storageObj.version != "1") {
+      // ...run migration from old version or...
+      // TO DO: ...create a new storageObj
+      // TO DO: should I save new object after migration?
+      // TO DO: maybe change this into a switch?
+      storageObj = newStorageObj();
+    }
+
+    // return notes object or empty object
+    return storageObj.notes || {};
+  }
+  console.log(getNotes());
+
+  function newNote(noteId) {
+    var note = {};
+    note.content = "";
+    note.dateModified = Date.now();
+    note.dateCreated = Date.now();
+    return note;
+  }
+
+  function getNote(noteId) {
+    // get json.notes (getNotes)
+    var notesObj = getNotes();
+    // get noteId value
+    note = notesObj[noteId] || newNote(noteId);
+    return note;
   }
 
   function saveNote(noteId, noteContent) {
-    var notesJsonString = localStorage.getItem("notesStorage");
-    var notesJson = {};
-    if (notesJsonString != null) {
-      notesJson = JSON.parse(notesJsonString);
-    }
-    notesJson[noteId] = noteContent;
-    localStorage.setItem('notesStorage', JSON.stringify(notesJson));
+    // get note (getNote)
+    var note = getNote(noteId);
+    // change noteContent & date modified
+    note.content = noteContent;
+    note.dateModified = Date.now();
+    // save note into localStorage
+    setNotes(noteId, note);
+  }
+
+  function setNotes(noteId, note) {
+    // get object from Localstorage,
+    var notesObj = getNotes();
+    // change note in notes object
+    notesObj[noteId] = note;
+    // construct storage object
+    var storageObj = {}
+    storageObj.version = "1";
+    storageObj.notes = notesObj;
+    // change to string & save into localStorage
+    localStorage.setItem('notesStorage', JSON.stringify(storageObj));
+  }
+
+  function showNote(noteId) {
+    var note = getNote(noteId);
+    noteContainer.innerHTML = note.content;
   }
 
   function startAutosaving() {
@@ -70,7 +130,7 @@ function initiateNote() {
     document.getElementsByTagName('head')[0].appendChild(link);
   }
   function setProperFavicon(noteTextLength) {
-    console.log("Character count: " + noteTextLength);
+    // console.log("Character count: " + noteTextLength);
     switch (true) {
       case (noteTextLength === 0):
         changeFavicon('empty');
