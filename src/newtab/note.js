@@ -114,30 +114,22 @@ function initiateNote() {
     link.href = 'favicon/' + state + '.png';
     document.getElementsByTagName('head')[0].appendChild(link);
   }
-  
+
   function setProperFavicon(noteTextLength) {
-    switch (true) {
-      case (noteTextLength === 0):
+    if (noteTextLength === 0) {
         changeFavicon('empty');
-        break;
-      case (noteTextLength < 20):
-        changeFavicon('1line');
-        break;
-      case (noteTextLength < 150):
-        changeFavicon('2lines');
-        break;
-      case (noteTextLength < 450):
-        changeFavicon('3lines');
-        break;
-      case (noteTextLength < 650):
-        changeFavicon('4lines');
-        break;
-      case (noteTextLength < 800):
-        changeFavicon('5lines');
-        break;
-      default:
-        changeFavicon('full');
-        break;
+    } else if (noteTextLength < 20) {
+      changeFavicon('1line');
+    } else if (noteTextLength < 150) {
+      changeFavicon('2lines');
+    } else if (noteTextLength < 450) {
+      changeFavicon('3lines');
+    } else if (noteTextLength < 650) {
+      changeFavicon('4lines');
+    } else if (noteTextLength < 800) {
+      changeFavicon('5lines');
+    } else {
+      changeFavicon('full');
     }
   }
 
