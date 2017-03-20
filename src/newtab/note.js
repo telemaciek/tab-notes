@@ -40,22 +40,17 @@ function initiateNote() {
       storageObj = JSON.parse(storageString);
     }
 
-    // if version doesn't match...
-    switch (true) {
-      case (storageObj.version === "1"): // if object has a good version, do nothing
-        console.log('All good, proceed');
-        break;
-      case (JSON.stringify(storageObj) === "{}"): // if there's nothing...
-        console.log('empty!');
-        storageObj = newStorageObj(); // ...create a new object
-        break;
-      case (storageObj.version == null): // if object isn't empty, but there is no version...
-        console.log("version doesn't exist");
-        storageObj = migrate(storageObj); // ...migrate old notes into new schema
-        break;
+    if (!Object.keys(storageObj).length) {
+      console.log("empty object");
+      storageObj = newStorageObj();
+    } else {
+      console.log("object exists");
     }
 
-
+    if (storageObj.version === undefined) { // if object isn't empty, but there is no version...
+      console.log("version doesn't exist, migrating");
+      storageObj = migrate(storageObj); // ...migrate old notes into new schema
+    }
     // return notes object or empty object
     return storageObj.notes || {};
   }
