@@ -5,20 +5,29 @@ function initiateNote() {
   function newStorageObj() {
     // Return initial json (could have example notes)
     var json = {};
-    json.notes = {};
     json.version = "1";
+    json.notes = {};
     return json;
   }
 
-  function migrate() {
-    // if version
-    // if version != 1, migrate
-    // notes.noteId.key = notes.key
-    // notes.noteId.value = notes.value
-    // notes.noteId.created = now
-    // version = 1
-    // set in localStorage
-    // return json.notes
+  function migrate(oldStorageObj) {
+    newStorageObj = newStorageObj();
+    var newNotesObj = newStorageObj.notes;
+    for (key in oldStorageObj) {
+      // console.log("key");
+      // console.log(key);
+      // console.log(oldStorageObj[key]);
+      newNotesObj[key] = {};
+      newNotesObj[key].content = oldStorageObj[key];
+      newNotesObj[key].dateCreated = Date.now();
+      newNotesObj[key].dateModified = Date.now();
+      // console.log(newNotesObj.key);
+      // console.log(newNotesObj.key.content);
+    }
+    console.log("newStorageObj");
+    console.log(newStorageObj);
+    localStorage.setItem('notesStorage', JSON.stringify(newStorageObj));
+    return newStorageObj;
   }
 
   function getNotes() {
@@ -32,18 +41,24 @@ function initiateNote() {
     }
 
     // if version doesn't match...
-    if (storageObj.version != "1") {
-      // ...run migration from old version or...
-      // TO DO: ...create a new storageObj
-      // TO DO: should I save new object after migration?
-      // TO DO: maybe change this into a switch?
-      storageObj = newStorageObj();
+    switch (true) {
+      case (storageObj.version === "1"): // if object has a good version, do nothing
+        console.log('All good, proceed');
+        break;
+      case (JSON.stringify(storageObj) === "{}"): // if there's nothing...
+        console.log('empty!');
+        storageObj = newStorageObj(); // ...create a new object
+        break;
+      case (storageObj.version == null): // if object isn't empty, but there is no version...
+        console.log("version doesn't exist");
+        storageObj = migrate(storageObj); // ...migrate old notes into new schema
+        break;
     }
+
 
     // return notes object or empty object
     return storageObj.notes || {};
   }
-  console.log(getNotes());
 
   function newNote(noteId) {
     var note = {};
