@@ -2,31 +2,76 @@ function initiateNote() {
   var noteContainer = document.getElementById('note-container');
   var noteId = window.location.hash.substring(1);
 
-  function loadNote(noteId) {
-    var noteContent = "";
-    var notesJsonString = localStorage.getItem("notesStorage");
-    if (notesJsonString != null) {
-      notesJson = JSON.parse(notesJsonString);
-      noteContent = notesJson[noteId];
-    }
-    return noteContent;
+  function newStorageObj() {
+    var json = {};
+    json.version = "1";
+    json.notes = {};
+    return json;
   }
 
-  function showNote(noteId) {
-    var noteContent = loadNote(noteId);
-    if (noteContent != undefined) {
-      noteContainer.innerHTML = noteContent;
+  function migrate(oldStorageObj) {
+    newStorageObj = newStorageObj();
+    var newNotesObj = newStorageObj.notes;
+    for (key in oldStorageObj) {
+      newNotesObj[key] = {};
+      newNotesObj[key].content = oldStorageObj[key];
+      newNotesObj[key].dateCreated = Date.now();
+      newNotesObj[key].dateModified = Date.now();
     }
+    localStorage.setItem('notesStorage', JSON.stringify(newStorageObj));
+    return newStorageObj;
+  }
+
+  function getNotes() {
+    var storageString = localStorage.getItem("notesStorage");
+    var storageObj = {};
+    if (storageString != null) {
+      storageObj = JSON.parse(storageString);
+    }
+
+    if (!Object.keys(storageObj).length) {
+      storageObj = newStorageObj();
+    }
+    if (storageObj.version === undefined) {
+      storageObj = migrate(storageObj);
+    }
+
+    return storageObj.notes || {};
+  }
+
+  function newNote(noteId) {
+    var note = {};
+    note.content = "";
+    note.dateModified = Date.now();
+    note.dateCreated = Date.now();
+    return note;
+  }
+
+  function getNote(noteId) {
+    var notesObj = getNotes();
+    note = notesObj[noteId] || newNote(noteId);
+    return note;
   }
 
   function saveNote(noteId, noteContent) {
-    var notesJsonString = localStorage.getItem("notesStorage");
-    var notesJson = {};
-    if (notesJsonString != null) {
-      notesJson = JSON.parse(notesJsonString);
-    }
-    notesJson[noteId] = noteContent;
-    localStorage.setItem('notesStorage', JSON.stringify(notesJson));
+    var note = getNote(noteId);
+    note.content = noteContent;
+    note.dateModified = Date.now();
+    setNotes(noteId, note);
+  }
+
+  function setNotes(noteId, note) {
+    var notesObj = getNotes();
+    notesObj[noteId] = note;
+    var storageObj = {}
+    storageObj.version = "1";
+    storageObj.notes = notesObj;
+    localStorage.setItem('notesStorage', JSON.stringify(storageObj));
+  }
+
+  function showNote(noteId) {
+    var note = getNote(noteId);
+    noteContainer.innerHTML = note.content;
   }
 
   function startAutosaving() {
@@ -62,16 +107,6 @@ function initiateNote() {
     }
   }
 
-  function startFaviconChanging() {
-    // window.addEventListener('focus', function() {
-      // Change into normal icon
-      // changeFavicon('empty-starred');
-    // });
-    // window.addEventListener('blur', function() {
-      // Change into a more dark-background-friendly icon
-      // changeFavicon('empty');
-    // });
-  }
   function changeFavicon(state) {
     var link = document.querySelector("link[rel*='icon']");
     link.type = 'image/png';
@@ -79,8 +114,8 @@ function initiateNote() {
     link.href = 'favicon/' + state + '.png';
     document.getElementsByTagName('head')[0].appendChild(link);
   }
+  
   function setProperFavicon(noteTextLength) {
-    console.log("Character count: " + noteTextLength);
     switch (true) {
       case (noteTextLength === 0):
         changeFavicon('empty');
@@ -110,7 +145,6 @@ function initiateNote() {
   setDocumentTitle(noteContainer.value);
   setProperFavicon(noteContainer.value.length);
   startAutosaving(); // Launch autosaving... also start changing title and favicon
-  startFaviconChanging(); // Change favicon based on if window is focused
 
 }
 window.addEventListener('load', initiateNote);

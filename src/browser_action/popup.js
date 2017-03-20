@@ -24,24 +24,25 @@ function initiatePopup() {
   exportJson();
 
   function listNotes() {
-    var notesJsonString = localStorage.getItem("notesStorage");
-    var notesJson = JSON.parse(notesJsonString);
-    var notesContainer = document.getElementById("notesList");
+    var storageString = localStorage.getItem("notesStorage");
+    var storageObj = JSON.parse(storageString);
+    var notesObj = storageObj.notes;
 
+    var notesContainer = document.getElementById("notesList");
     var noteElement = "";
 
-    for (key in notesJson) {
-      note = notesJson[key];
+    for (key in notesObj) {
+      note = notesObj[key];
       var noteSize;
-      if (note.length === 0) {
+      if (note.content.length === 0) {
         noteSize = "Empty"
       } else {
-        noteSize = note.length + " characters"
+        noteSize = note.content.length + " characters"
       }
       noteElement += "<div class='note-container'>"
         + "<a href='/newtab/note.html#" + key + "' target='" + key + "' class='note'>"
         + "<div class='note-content'>"
-        + note
+        + note.content
         + "</div>"
         + "<div class='note-extra'>"
         + noteSize
@@ -71,11 +72,13 @@ function initiatePopup() {
     };
   }
   function deleteNote() {
-    var notesJsonString = localStorage.getItem("notesStorage");
-    var notesJson = JSON.parse(notesJsonString);
+    var storageString = localStorage.getItem("notesStorage");
+    var storageObj = JSON.parse(storageString);
+    notesObj = storageObj.notes;
     var noteId = this.getAttribute('data-note-id');
-    delete notesJson[noteId];
-    localStorage.setItem('notesStorage', JSON.stringify(notesJson));
+    delete notesObj[noteId];
+    storageObj.notes = notesObj;
+    localStorage.setItem('notesStorage', JSON.stringify(storageObj));
     listNotes();
   }
 
