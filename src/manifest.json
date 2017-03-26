@@ -1,7 +1,8 @@
 {
   "name": "Tab Notes",
-  "description": "A new note in place of every new tab. The quickest way to capture your thoughts.",
-  "version": "0.3",
+  "description": "A new note in place of every new tab. Fastest way to capture your thoughts.",
+  "version": "0.4",
+  "offline_enabled": true,
   "manifest_version": 2,
   "icons": {
     "16": "images/notes_16.png",
