@@ -1,6 +1,6 @@
 {
   "name": "Tab Notes",
-  "description": "A new note in place of every new tab. Fastest way to capture your thoughts.",
+  "description": "Write a new note in every new tab. Capture your thoughts faster.",
   "version": "0.4",
   "offline_enabled": true,
   "manifest_version": 2,
