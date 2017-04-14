@@ -9,14 +9,20 @@ function initiatePopup() {
   }
   // selectText();
 
+  var generateDate = function(){
+    var time = new Date();
+    timeOfSave = time.getDate() + "-" + (time.getMonth() + 1) + "-" + time.getFullYear() + "-at-" + time.getHours() + "-" + time.getMinutes();
+    return timeOfSave;
+  }
+
   function exportJson() {
     var exportJsonLink = document.getElementById('exportJsonLink');
     var notesJsonString = localStorage.getItem("notesStorage");
     var data = new Blob([notesJsonString], {type: 'text/json'});
     function downloadExport() {
       var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(notesJsonString);
-      var timeOfSave = new Date();
-      exportJsonLink.download = "tab-notes-backup-" + timeOfSave.getTime() + ".json";
+      var timeOfSave = generateDate();
+      exportJsonLink.download = "tab-notes-backup-" + timeOfSave + ".json";
       exportJsonLink.href = dataUri;
     }
     exportJsonLink.addEventListener('click', downloadExport);
