@@ -11,7 +11,8 @@ function initiatePopup() {
 
   var generateDate = function(){
     var time = new Date();
-    timeOfSave = time.getDate() + "-" + (time.getMonth() + 1) + "-" + time.getFullYear() + "-at-" + time.getHours() + "-" + time.getMinutes();
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    timeOfSave = time.getDate() + " " + months[time.getMonth()] + " " + time.getFullYear() + " at " + time.getHours() + "-" + time.getMinutes();
     return timeOfSave;
   }
 
@@ -22,7 +23,7 @@ function initiatePopup() {
     function downloadExport() {
       var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(notesJsonString);
       var timeOfSave = generateDate();
-      exportJsonLink.download = "tab-notes-backup-" + timeOfSave + ".json";
+      exportJsonLink.download = "tab-notes-backup (" + timeOfSave + ").json";
       exportJsonLink.href = dataUri;
     }
     exportJsonLink.addEventListener('click', downloadExport);
