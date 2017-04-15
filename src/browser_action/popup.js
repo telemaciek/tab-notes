@@ -9,10 +9,10 @@ function initiatePopup() {
   }
   // selectText();
 
-  var getDate = function(time){
+  var getDate = function(time, style){
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var timeNow = new Date();
-    if (timeNow.getDay() === time.getDay() && time.getMonth() === timeNow.getMonth() && time.getFullYear() === timeNow.getFullYear()) {
+    if (style != "absolute" && timeNow.getDay() === time.getDay() && time.getMonth() === timeNow.getMonth() && time.getFullYear() === timeNow.getFullYear()) {
       return "Today at " + ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
     } else {
       absoluteDate = time.getDate() + " " + months[time.getMonth()] + " " + time.getFullYear() + " at " + ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
@@ -26,7 +26,7 @@ function initiatePopup() {
     var data = new Blob([notesJsonString], {type: 'text/json'});
     function downloadExport() {
       var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(notesJsonString);
-      var timeOfSave = getDate(new Date());
+      var timeOfSave = getDate(new Date(), "absolute");
       exportJsonLink.download = "tab-notes-backup (" + timeOfSave + ").json";
       exportJsonLink.href = dataUri;
     }
@@ -38,15 +38,10 @@ function initiatePopup() {
     var storageString = localStorage.getItem("notesStorage");
     var storageObj = JSON.parse(storageString);
     var notesObj = storageObj.notes;
-
     var notesContainer = document.getElementById("notesList");
     var noteElement = "";
-
-    console.log(notesObj);
     var notesArray = Object.keys(notesObj).map(function (key) { notesObj[key].id = key; return notesObj[key]; });
-    console.log(notesArray);
     var sortedNotesArray = notesArray.sort(function(a, b){ return a.dateModified - b.dateModified }).reverse()
-    console.log(sortedNotesArray);
 
     for (var i = 0; i < sortedNotesArray.length; i++) {
       note = sortedNotesArray[i];
