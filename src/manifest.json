@@ -1,7 +1,7 @@
 {
   "name": "Tab Notes",
   "description": "Write a new note in every new tab. Capture your thoughts faster.",
-  "version": "0.4",
+  "version": "0.4.1",
   "offline_enabled": true,
   "manifest_version": 2,
   "icons": {
