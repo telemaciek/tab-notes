@@ -13,6 +13,7 @@ body {
   min-width: 400px;
   padding: 30px 0 70px 0;
   font-family: "Helvetica Neue", sans-serif;
+  background: #fcfcfc;
 }
 body.default { /* popup */
   padding-top: 0;

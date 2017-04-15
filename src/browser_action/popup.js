@@ -54,13 +54,13 @@ function initiatePopup() {
       noteElement += "<div class='note-container'>"
         + "<a href='/newtab/note.html#" + note.id + "' target='" + note.id + "' class='note'>"
         + "<div class='note-content'>"
-        + note.content
+        + note.content.slice(0,100)
         + "</div>"
         + "<div class='note-extra'>"
         + getDate(new Date(note.dateModified))
-        + "<span class='note-size'>("
-        + noteSize
-        + ")</span>"
+        // + "<span class='note-size'>"
+        // + noteSize
+        // + "</span>"
         + "</div>"
         + "</a>"
         + "<div class='note-actions'>"
