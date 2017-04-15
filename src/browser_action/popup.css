@@ -87,6 +87,10 @@ body.default { /* popup */
     opacity: 0.4;
     padding-top: 2px;
   }
+  .note-size {
+    /*float: right;*/
+    margin-left: 10px;
+  }
 .note-actions {
   display: flex;
   flex-direction: row;
