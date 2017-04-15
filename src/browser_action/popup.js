@@ -45,9 +45,11 @@ function initiatePopup() {
     console.log(notesObj);
     var notesArray = Object.keys(notesObj).map(function (key) { notesObj[key].id = key; return notesObj[key]; });
     console.log(notesArray);
+    var sortedNotesArray = notesArray.sort(function(a, b){ return a.dateModified - b.dateModified }).reverse()
+    console.log(sortedNotesArray);
 
-    for (var i = 0; i < notesArray.length; i++) {
-      note = notesArray[i];
+    for (var i = 0; i < sortedNotesArray.length; i++) {
+      note = sortedNotesArray[i];
       var noteSize;
       if (note.content.length === 0) {
         noteSize = "Empty"
