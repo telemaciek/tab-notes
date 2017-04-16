@@ -1,6 +1,8 @@
 function initiateNote() {
-  var noteContainer = document.getElementById('note-container');
+  var noteContainer = document.getElementById('js-note-container');
   var noteId = window.location.hash.substring(1);
+
+  noteContainer.focus();
 
   function newStorageObj() {
     var json = {};
@@ -76,8 +78,9 @@ function initiateNote() {
 
   function startAutosaving() {
     noteContainer.onkeyup = function(e) {
-      var noteText = e.target.value;
-      saveNote(noteId, noteText);
+      var noteHtml = e.target.innerHTML;
+      var noteText = e.target.innerText;
+      saveNote(noteId, noteHtml);
       setDocumentTitle(noteText);
       setProperFavicon(noteText.length);
     }
@@ -134,8 +137,8 @@ function initiateNote() {
   }
 
   showNote(noteId);
-  setDocumentTitle(noteContainer.value);
-  setProperFavicon(noteContainer.value.length);
+  setDocumentTitle(noteContainer.innerText);
+  setProperFavicon(noteContainer.innerText.length);
   startAutosaving(); // Launch autosaving... also start changing title and favicon
 
 }
