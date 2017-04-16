@@ -34,15 +34,47 @@ function initiatePopup() {
   }
   exportJson();
 
-  function listNotes() {
+  var getNotes = function(){
     var storageString = localStorage.getItem("notesStorage");
     var storageObj = JSON.parse(storageString);
-    var notesObj = storageObj.notes;
-    var notesContainer = document.getElementById("notesList");
-    var noteElement = "";
+    return storageObj.notes;
+  }
+
+  var sortNotes = function(){
+    var notesObj = getNotes();
     var notesArray = Object.keys(notesObj).map(function (key) { notesObj[key].id = key; return notesObj[key]; });
     var sortedNotesArray = notesArray.sort(function(a, b){ return a.dateModified - b.dateModified }).reverse()
+    return sortedNotesArray;
+  }
 
+  var filterNotes = function(searchTerm){
+    var notesArr = sortNotes();
+    var options = {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+        "content"
+      ]
+    };
+    var fuse = new Fuse(notesArr, options); // "list" is the item array
+    var result = fuse.search(searchTerm);
+    console.log(result);
+
+    if (searchTerm) {
+      return result;
+    } else {
+      return notesArr;
+    }
+  }
+
+  function listNotes() {
+    var sortedNotesArray = filterNotes("");
+    var notesContainer = document.getElementById("notesList");
+    var noteElement = "";
     for (var i = 0; i < sortedNotesArray.length; i++) {
       note = sortedNotesArray[i];
       var noteSize;
@@ -96,7 +128,6 @@ function initiatePopup() {
     localStorage.setItem('notesStorage', JSON.stringify(storageObj));
     listNotes();
   }
-
 }
 
 window.onload = initiatePopup;
