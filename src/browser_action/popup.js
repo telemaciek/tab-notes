@@ -51,7 +51,7 @@ function initiatePopup() {
     var notesArr = sortNotes();
     var options = {
       shouldSort: true,
-      threshold: 0.6,
+      threshold: 0.4,
       location: 0,
       distance: 100,
       maxPatternLength: 32,
@@ -70,13 +70,28 @@ function initiatePopup() {
       return notesArr;
     }
   }
+  var search = function(){
+    var searchInput = document.querySelector('#searchInput');
+    searchInput.focus();
+    searchInput.addEventListener('keyup', function(){
+      listNotes(searchInput.value)
+      console.log(searchInput);
+    });
+  }
+  search();
 
-  function listNotes() {
-    var sortedNotesArray = filterNotes("");
+  function listNotes(searchTerm) {
+    if (searchTerm) {
+      var notesArr = filterNotes(searchTerm);
+    } else {
+      var notesArr = sortNotes();
+    }
+
+
     var notesContainer = document.getElementById("notesList");
     var noteElement = "";
-    for (var i = 0; i < sortedNotesArray.length; i++) {
-      note = sortedNotesArray[i];
+    for (var i = 0; i < notesArr.length; i++) {
+      note = notesArr[i];
       var noteSize;
       if (note.content.length === 0) {
         noteSize = "Empty"

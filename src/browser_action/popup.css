@@ -20,6 +20,22 @@ body.default { /* popup */
   padding-bottom: 42px;
 }
 
+.search {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: block;
+  outline: 0;
+  border: 0;
+  background: rgba(255,255,255,0);
+  line-height: 50px;
+  font-size: 13px;
+  padding: 0 15px;
+}
+.default .search {
+  border-bottom: solid 1px #f0f0f0;
+}
+
 .notes-list {
   margin: 0px;
   max-width: 640px;
