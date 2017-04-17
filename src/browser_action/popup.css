@@ -46,7 +46,7 @@ body.default { /* popup */
 }
 .default .notes-list { /* popup */
   border: 0;
-  max-width: 450px;
+  width: 450px;
 }
 
 .note-container {

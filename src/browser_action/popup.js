@@ -62,7 +62,6 @@ function initiatePopup() {
     };
     var fuse = new Fuse(notesArr, options); // "list" is the item array
     var result = fuse.search(searchTerm);
-    console.log(result);
 
     if (searchTerm) {
       return result;
@@ -75,7 +74,6 @@ function initiatePopup() {
     searchInput.focus();
     searchInput.addEventListener('keyup', function(){
       listNotes(searchInput.value)
-      console.log(searchInput);
     });
   }
   search();
@@ -93,15 +91,20 @@ function initiatePopup() {
     for (var i = 0; i < notesArr.length; i++) {
       note = notesArr[i];
       var noteSize;
-      if (note.content.length === 0) {
+
+      var fakeDomElement = document.createElement("div");
+      fakeDomElement.innerHTML = note.content;
+      var noteContent = fakeDomElement.textContent || fakeDomElement.innerText;
+
+      if (noteContent.length === 0) {
         noteSize = "Empty"
       } else {
-        noteSize = note.content.length + " characters"
+        noteSize = noteContent.length + " characters"
       }
       noteElement += "<div class='note-container'>"
         + "<a href='/newtab/note.html#" + note.id + "' target='" + note.id + "' class='note'>"
         + "<div class='note-content'>"
-        + note.content.slice(0,100)
+        + noteContent.slice(0,100)
         + "</div>"
         + "<div class='note-extra'>"
         + getDate(new Date(note.dateModified))
