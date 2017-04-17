@@ -77,13 +77,13 @@ function initiateNote() {
   }
 
   function startAutosaving() {
-    noteContainer.onkeyup = function(e) {
+    noteContainer.addEventListener("input", function(e) {
       var noteHtml = e.target.innerHTML;
       var noteText = e.target.innerText;
       saveNote(noteId, noteHtml);
       setDocumentTitle(noteText);
       setProperFavicon(noteText.length);
-    }
+    })
   }
 
   function setDocumentTitle(content) {
