@@ -73,12 +73,12 @@ function initiateNote() {
 
   function showNote(noteId) {
     var note = getNote(noteId);
-    noteContainer.innerHTML = note.content;
+    noteContainer.innerText = note.content;
   }
 
   function startAutosaving() {
     noteContainer.addEventListener("input", function(e) {
-      var noteHtml = e.target.innerHTML;
+      var noteHtml = e.target.innerText;
       var noteText = e.target.innerText;
       saveNote(noteId, noteHtml);
       setDocumentTitle(noteText);
