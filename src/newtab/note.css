@@ -12,13 +12,14 @@ body {
 }
 .note-wrapper {
   height: 100%;
-  padding: 40px 0 0 0;
+  padding: 0 0 0 0;
 }
 .note-container {
-  /*width: 100%;*/
-  max-width: 900px; margin: 0 auto;
+  width: 100%;
+  /*max-width: 900px; */
+  margin: 0 auto;
   min-height: 100%;
-  padding: 100px 80px;
+  padding: 60px 40px;
   outline: 0;
   border: 0;
   font-size: 16px;
