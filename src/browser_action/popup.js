@@ -127,8 +127,8 @@ function initiatePopup() {
     notesContainer.innerHTML = noteElement;
     bindDelete();
   }
-  listNotes();
-  window.addEventListener("focus", listNotes); // Redraw notes every time you get back
+  listNotes("");
+  window.addEventListener("focus", listNotes()); // Redraw notes every time you get back
 
   function bindDelete() {
     var deleteButtons = document.getElementsByClassName('js-note-delete');
