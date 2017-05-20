@@ -78,9 +78,8 @@ function initiateNote() {
 
   function startAutosaving() {
     noteContainer.addEventListener("input", function(e) {
-      var noteHtml = e.target.innerText;
-      var noteText = e.target.innerText;
-      saveNote(noteId, noteHtml);
+      var noteText = e.target.value;
+      saveNote(noteId, noteText);
       setDocumentTitle(noteText);
       setProperFavicon(noteText.length);
     })
@@ -137,8 +136,8 @@ function initiateNote() {
   }
 
   showNote(noteId);
-  setDocumentTitle(noteContainer.innerText);
-  setProperFavicon(noteContainer.innerText.length);
+  setDocumentTitle(noteContainer.value);
+  setProperFavicon(noteContainer.value.length);
   startAutosaving(); // Launch autosaving... also start changing title and favicon
 
 }
