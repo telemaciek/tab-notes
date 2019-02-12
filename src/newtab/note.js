@@ -134,7 +134,7 @@ function initiateNote() {
 
   // Set it up for the first time
   showNote(noteId);
-  var initialHTML = noteContainer.innerHTML;
+  var initialHTML = sanitizeHtml(noteContainer.innerHTML.substring(0, 20), { allowedTags: [], allowedAttributes: {} });
   setDocumentTitle(initialHTML);
   setProperFavicon(initialHTML.length);
 
