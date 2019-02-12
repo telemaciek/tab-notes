@@ -143,13 +143,13 @@ function initiatePopup() {
     };
   }
   function deleteNote() {
-    var storageString = localStorage.getItem("notesStorage");
+    var storageString = localStorage.getItem("notesStorageHTML");
     var storageObj = JSON.parse(storageString);
     notesObj = storageObj.notes;
     var noteId = this.getAttribute('data-note-id');
     delete notesObj[noteId];
     storageObj.notes = notesObj;
-    localStorage.setItem('notesStorage', JSON.stringify(storageObj));
+    localStorage.setItem('notesStorageHTML', JSON.stringify(storageObj));
     listNotes();
   }
 }
