@@ -22,7 +22,7 @@ function initiatePopup() {
 
   function exportJson() {
     var exportJsonLink = document.getElementById('exportJsonLink');
-    var notesJsonString = localStorage.getItem("notesStorage");
+    var notesJsonString = localStorage.getItem("notesStorageHTML");
     var data = new Blob([notesJsonString], {type: 'text/json'});
     function downloadExport() {
       var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(notesJsonString);
