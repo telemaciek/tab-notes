@@ -25,7 +25,13 @@ function initiateNote() {
   }
 
   function getNotes() {
+    
+    if (localStorage.getItem("notesStorageHTML")) {
+      var storageString = localStorage.getItem("notesStorageHTML");
+    } else {
     var storageString = localStorage.getItem("notesStorage");
+    }
+
     var storageObj = {};
     if (storageString != null) {
       storageObj = JSON.parse(storageString);
@@ -66,9 +72,9 @@ function initiateNote() {
     var notesObj = getNotes();
     notesObj[noteId] = note;
     var storageObj = {}
-    storageObj.version = "1";
+    storageObj.version = "1.1";
     storageObj.notes = notesObj;
-    localStorage.setItem('notesStorage', JSON.stringify(storageObj));
+    localStorage.setItem('notesStorageHTML', JSON.stringify(storageObj));
   }
 
   function showNote(noteId) {

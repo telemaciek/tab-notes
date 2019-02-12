@@ -35,7 +35,13 @@ function initiatePopup() {
   exportJson();
 
   var getNotes = function(){
-    var storageString = localStorage.getItem("notesStorage");
+    
+    if (localStorage.getItem("notesStorageHTML")) {
+      var storageString = localStorage.getItem("notesStorageHTML");
+    } else {
+      var storageString = localStorage.getItem("notesStorage");
+    }
+
     var storageObj = JSON.parse(storageString);
     return storageObj.notes;
   }
