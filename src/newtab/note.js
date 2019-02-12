@@ -85,7 +85,7 @@ function initiateNote() {
   
   function startAutosaving() {
 
-    saveDebounce = debounce(function (e) {
+    var debouncedSave = debounce(function (e) {
       e.preventDefault();
 
       // Save sanitized html with selected tags available for new lines and simple formatting
@@ -101,7 +101,7 @@ function initiateNote() {
       setProperFavicon(noteText.length);
     }, 250);
 
-    noteContainer.addEventListener("input", saveDebounce)
+    noteContainer.addEventListener("input", debouncedSave)
   }
 
   function setDocumentTitle(content) {
