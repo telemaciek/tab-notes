@@ -22,7 +22,7 @@ function initiatePopup() {
 
   function exportJson() {
     var exportJsonLink = document.getElementById('exportJsonLink');
-    var notesJsonString = localStorage.getItem("notesStorage");
+    var notesJsonString = localStorage.getItem("notesStorageHTML");
     var data = new Blob([notesJsonString], {type: 'text/json'});
     function downloadExport() {
       var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(notesJsonString);
@@ -35,7 +35,13 @@ function initiatePopup() {
   exportJson();
 
   var getNotes = function(){
-    var storageString = localStorage.getItem("notesStorage");
+    
+    var storageString = localStorage.getItem("notesStorageHTML");
+
+    if (!storageString) {
+      storageString = localStorage.getItem("notesStorage");
+    }
+
     var storageObj = JSON.parse(storageString);
     return storageObj.notes;
   }
@@ -137,13 +143,13 @@ function initiatePopup() {
     };
   }
   function deleteNote() {
-    var storageString = localStorage.getItem("notesStorage");
+    var storageString = localStorage.getItem("notesStorageHTML");
     var storageObj = JSON.parse(storageString);
     notesObj = storageObj.notes;
     var noteId = this.getAttribute('data-note-id');
     delete notesObj[noteId];
     storageObj.notes = notesObj;
-    localStorage.setItem('notesStorage', JSON.stringify(storageObj));
+    localStorage.setItem('notesStorageHTML', JSON.stringify(storageObj));
     listNotes();
   }
 }
