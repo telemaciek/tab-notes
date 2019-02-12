@@ -73,38 +73,35 @@ function initiateNote() {
 
   function showNote(noteId) {
     var note = getNote(noteId);
-    noteContainer.innerText = note.content;
+    noteContainer.innerHTML = note.content;
   }
 
   function startAutosaving() {
     noteContainer.addEventListener("input", function(e) {
-      var noteText = e.target.value;
+
+      // Save sanitized html with selected tags available for new lines and simple formatting
+      // var noteText = e.target.innerHTML;
+      var noteText = sanitizeHtml(e.target.innerHTML, { allowedTags: ["strong", "b", "i", "div", "em", "br"], allowedAttributes: { } });
+
+      // Display sanitized title and amount of text
+      // var sanitizedTitle = noteText.substring(0, 20);
+      var sanitizedTitle = sanitizeHtml(noteText.substring(0, 20), { allowedTags: [], allowedAttributes: {} });
+
       saveNote(noteId, noteText);
-      setDocumentTitle(noteText);
+      setDocumentTitle(sanitizedTitle);
       setProperFavicon(noteText.length);
     })
   }
 
   function setDocumentTitle(content) {
-    var newlineIndex = content.indexOf("\n");
     switch (true) {
       case (content === ""):
       case (content === "\n"):
-      case (content === "\n\n"):
-      case (content === "\n\n\n"):
+      case (content === "<br>"):
         document.title = "Note";
         break;
-      case (newlineIndex <= 0):
-        document.title = content.substring(0,20);
-        break;
-      case (newlineIndex <= 20):
-        document.title = content.substring(0,newlineIndex);
-        break;
-      case (content.length > 20):
-        document.title = content.substring(0,20) + "...";
-        break;
-      case (newlineIndex > 20):
-        document.title = content.substring(0,20) + "...";
+      case (content != ""):
+        document.title = content;
         break;
     }
   }
@@ -135,10 +132,13 @@ function initiateNote() {
     }
   }
 
+  // Set it up for the first time
   showNote(noteId);
-  setDocumentTitle(noteContainer.value);
-  setProperFavicon(noteContainer.value.length);
-  startAutosaving(); // Launch autosaving... also start changing title and favicon
+  var initialHTML = noteContainer.innerHTML;
+  setDocumentTitle(initialHTML);
+  setProperFavicon(initialHTML.length);
 
+  // Launch autosaving... also start changing title and favicon
+  startAutosaving();
 }
 window.addEventListener('load', initiateNote);
