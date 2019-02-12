@@ -36,10 +36,10 @@ function initiatePopup() {
 
   var getNotes = function(){
     
-    if (localStorage.getItem("notesStorageHTML")) {
-      var storageString = localStorage.getItem("notesStorageHTML");
-    } else {
-      var storageString = localStorage.getItem("notesStorage");
+    var storageString = localStorage.getItem("notesStorageHTML");
+
+    if (!storageString) {
+      storageString = localStorage.getItem("notesStorage");
     }
 
     var storageObj = JSON.parse(storageString);

@@ -26,10 +26,10 @@ function initiateNote() {
 
   function getNotes() {
     
-    if (localStorage.getItem("notesStorageHTML")) {
-      var storageString = localStorage.getItem("notesStorageHTML");
-    } else {
-    var storageString = localStorage.getItem("notesStorage");
+    var storageString = localStorage.getItem("notesStorageHTML");
+
+    if (!storageString) {
+      storageString = localStorage.getItem("notesStorage");
     }
 
     var storageObj = {};
@@ -64,6 +64,7 @@ function initiateNote() {
   function saveNote(noteId, noteContent) {
     var note = getNote(noteId);
     note.content = noteContent;
+    note.formatVersion = "1.1";
     note.dateModified = Date.now();
     setNotes(noteId, note);
   }
@@ -81,13 +82,15 @@ function initiateNote() {
     var note = getNote(noteId);
     noteContainer.innerHTML = note.content;
   }
-
+  
   function startAutosaving() {
-    noteContainer.addEventListener("input", function(e) {
+
+    saveDebounce = debounce(function (e) {
+      e.preventDefault();
 
       // Save sanitized html with selected tags available for new lines and simple formatting
       // var noteText = e.target.innerHTML;
-      var noteText = sanitizeHtml(e.target.innerHTML, { allowedTags: ["strong", "b", "i", "div", "em", "br"], allowedAttributes: { } });
+      var noteText = sanitizeHtml(e.target.innerHTML, { allowedTags: ["strong", "b", "i", "div", "em", "br"], allowedAttributes: {} });
 
       // Display sanitized title and amount of text
       // var sanitizedTitle = noteText.substring(0, 20);
@@ -96,7 +99,9 @@ function initiateNote() {
       saveNote(noteId, noteText);
       setDocumentTitle(sanitizedTitle);
       setProperFavicon(noteText.length);
-    })
+    }, 250);
+
+    noteContainer.addEventListener("input", saveDebounce)
   }
 
   function setDocumentTitle(content) {
@@ -137,6 +142,21 @@ function initiateNote() {
       changeFavicon('full');
     }
   }
+
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+      var context = this, args = arguments;
+      var later = function () {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
 
   // Set it up for the first time
   showNote(noteId);
