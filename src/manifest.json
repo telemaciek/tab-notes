@@ -1,7 +1,7 @@
 {
   "name": "Tab Notes",
   "description": "New note in every new tab. Capture thoughts faster.",
-  "version": "0.7",
+  "version": "0.8",
   "offline_enabled": true,
   "manifest_version": 2,
   "icons": {
@@ -12,9 +12,13 @@
     "newtab": "newtab/newtab.html"
   },
   "browser_action": {
-    "default_popup": "browser_action/popup.html#default",
+    "default_popup": "browser_action/popup.html",
     "default_icon": {
       "16": "images/notes_48.png"
     }
-  }
+  },
+  "web_accessible_resources": [ 
+    "common/notesStorage.js", 
+    "common/settingsStorage.js" 
+  ]
 }

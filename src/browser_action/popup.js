@@ -1,49 +1,56 @@
+import * as notesStorage from '../common/notesStorage.js';
+import * as settingsStorage from '../common/settingsStorage.js';
+
 function initiatePopup() {
-
-  if (window.location.hash.substring(1) == 'default') {
-    document.getElementById('popupPage').className = 'default';
-  }
-
-  function selectText() {
-    document.getElementById('specials').select();
-  }
-  // selectText();
-
+ 
   var getDate = function(time, style){
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var timeNow = new Date();
     if (style != "absolute" && timeNow.getDay() === time.getDay() && time.getMonth() === timeNow.getMonth() && time.getFullYear() === timeNow.getFullYear()) {
       return "Today at " + ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
     } else {
-      absoluteDate = time.getDate() + " " + months[time.getMonth()] + " " + time.getFullYear() + " at " + ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
-      return absoluteDate;
+      return time.getDate() + " " + months[time.getMonth()] + " " + time.getFullYear() + " at " + ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
     }
   }
 
-  function exportJson() {
-    var exportJsonLink = document.getElementById('exportJsonLink');
-    var notesJsonString = localStorage.getItem("notesStorageHTML");
-    var data = new Blob([notesJsonString], {type: 'text/json'});
-    function downloadExport() {
-      var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(notesJsonString);
-      var timeOfSave = getDate(new Date(), "absolute");
-      exportJsonLink.download = "tab-notes-backup (" + timeOfSave + ").json";
-      exportJsonLink.href = dataUri;
+  var exportJsonLink = document.getElementById('exportJsonLink');
+  exportJsonLink.addEventListener('click', () => {
+    var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(notesStorage.getString());
+    var timeOfSave = getDate(new Date(), "absolute");
+    exportJsonLink.download = "tab-notes-backup (" + timeOfSave + ").json";
+    exportJsonLink.href = dataUri;
+  });
+
+  var notesStorageObj = notesStorage.getObj();
+  var settingsStorageObj = settingsStorage.getObj();
+
+  function setTheme(darkMode)
+  {
+    var popupPage = document.getElementById('popupPage');
+
+    if (darkMode)
+    {
+      popupPage.classList.add("theme-dark");
     }
-    exportJsonLink.addEventListener('click', downloadExport);
+    else {
+      popupPage.classList.remove("theme-dark");
+    }
+    
+    document.getElementById("theme-icon-dark").style.display = darkMode ? "inline" : "none";
+    document.getElementById("theme-icon-light").style.display = darkMode ? "none" : "inline";
   }
-  exportJson();
+  setTheme(settingsStorageObj.darkMode);
+
+  var toggleThemeLink = document.getElementById('toggleThemeLink');
+  toggleThemeLink.addEventListener('click', () => {
+    settingsStorageObj.darkMode = !settingsStorageObj.darkMode;
+    settingsStorage.set(settingsStorageObj);
+    setTheme(settingsStorageObj.darkMode);
+  });
 
   var getNotes = function(){
-    
-    var storageString = localStorage.getItem("notesStorageHTML");
-
-    if (!storageString) {
-      storageString = localStorage.getItem("notesStorage");
-    }
-
-    var storageObj = JSON.parse(storageString);
-    return storageObj.notes;
+    // use cached notes object to avoid serialization hit on each filter call
+    return notesStorageObj.notes;
   }
 
   var sortNotes = function(){
@@ -95,7 +102,7 @@ function initiatePopup() {
     var notesContainer = document.getElementById("notesList");
     var noteElement = "";
     for (var i = 0; i < notesArr.length; i++) {
-      note = notesArr[i];
+      var note = notesArr[i];
       var noteSize;
 
       var fakeDomElement = document.createElement("div");
@@ -142,14 +149,15 @@ function initiatePopup() {
       deleteButtons[i].addEventListener('click', deleteNote);
     };
   }
+
   function deleteNote() {
-    var storageString = localStorage.getItem("notesStorageHTML");
-    var storageObj = JSON.parse(storageString);
-    notesObj = storageObj.notes;
+    // refresh cached object to avoid lost deletes if deletes are performed across more than one popup instance
+    notesStorageObj = notesStorage.getObj();
+    var notesObj = notesStorageObj.notes;
     var noteId = this.getAttribute('data-note-id');
     delete notesObj[noteId];
-    storageObj.notes = notesObj;
-    localStorage.setItem('notesStorageHTML', JSON.stringify(storageObj));
+    notesStorageObj.notes = notesObj;
+    notesStorage.set(notesStorageObj);
     listNotes();
   }
 }

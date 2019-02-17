@@ -26,3 +26,9 @@ body {
   background: rgba(255,255,255,1);
   white-space: pre-wrap;
 }
+
+.theme-dark
+{
+  color: #FCFCFC;
+  background: #333333;
+}

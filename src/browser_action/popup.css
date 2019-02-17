@@ -13,12 +13,14 @@ body {
   min-width: 400px;
   padding: 30px 0 70px 0;
   font-family: "Helvetica Neue", sans-serif;
-  background: #fcfcfc;
-}
-body.default { /* popup */
+  background: #FCFCFC;
   padding-top: 0;
   padding-bottom: 42px;
 }
+body.theme-dark {
+  background: #222222;
+}
+
 
 .search {
   width: 100%;
@@ -27,34 +29,40 @@ body.default { /* popup */
   display: block;
   outline: 0;
   border: 0;
+  border-bottom: solid 1px #F0F0F0;
   background: rgba(255,255,255,0);
   line-height: 50px;
   font-size: 13px;
   padding: 0 15px;
 }
-.default .search {
-  border-bottom: solid 1px #f0f0f0;
+.theme-dark .search {
+  color: #FCFCFC;
+  background-color: #222222;
+  border-color: #333333;
 }
+  .theme-dark .search::placeholder {
+    color: #BBBBBB;
+  }
+
 
 .notes-list {
   margin: 0px;
-  max-width: 640px;
   margin: 0 auto;
-  border: solid 1px #f0f0f0;
-  background-color: #f0f0f0;
-  overflow: hidden;
-}
-.default .notes-list { /* popup */
   border: 0;
   width: 450px;
+  background-color: #F0F0F0;
+  overflow: hidden;
+}
+.theme-dark .notes-list {
+  background-color: #222222
 }
 
 .note-container {
-  background: #fff;
+  background: #FFFFFF;
   display:flex;
   flex-direction: row;
   cursor: pointer;
-  margin-bottom: 1px;
+  border-bottom: solid 1px #F0F0F0;
   transition: background-color 0.1s;
 }
   .note-container:first-child {
@@ -67,6 +75,15 @@ body.default { /* popup */
   .note-container:hover {
     background-color: #F8F8F8;
   }
+.theme-dark .note-container {
+  background-color: #333333;
+  border-color: #222222;
+}
+  .theme-dark .note-container:hover {
+    background-color: #444444;
+  }
+  
+
 .note {
   display:flex;
   flex-direction: column;
@@ -105,9 +122,16 @@ body.default { /* popup */
     padding-top: 2px;
   }
   .note-size {
-    /*float: right;*/
     margin-left: 10px;
   }
+
+.theme-dark .note-content {
+  color: #FCFCFC;
+}
+.theme-dark .note-extra {
+  color: #DDDDDD;
+}
+
 .note-actions {
   display: flex;
   flex-direction: row;
@@ -130,13 +154,17 @@ body.default { /* popup */
     background-color: rgba(0,0,0,0.05);
     border-radius: 0px;
   }
+    .theme-dark .note-delete:hover {
+      background-color: rgba(255,255,255,0.05);
+    }
   .note-delete:hover path {
     fill: #d04202;
   }
 
+
 .footer-links {
   background: #F8F8F8;
-  border-top: solid 1px #eee;
+  border-top: solid 1px #EEEEEE;
   position: fixed;
   height: 44px;
   width: 100%;
@@ -144,21 +172,38 @@ body.default { /* popup */
   text-align: center;
   line-height: 44px;
 }
-.export-link {
+.theme-dark .footer-links {
+  background-color: #222222;
+  border-color: #333333;
+}
+
+.footer-link {
   position: relative;
   display: inline-block;
   padding: 0px 20px 0 40px;
   text-decoration: none;
-  color: #333;
+  color: #333333;
 }
-  .export-link svg {
+  .footer-link svg {
     position: absolute;
     top: 12px;
     left: 12px;
   }
-  .export-link:hover {
+  .footer-link:hover {
     color: #1CB7E0;
   }
-    .export-link:hover svg path {
+    .footer-link:hover svg path {
       fill: #1CB7E0;
     }
+.theme-dark .footer-link {
+  color: #FCFCFC; 
+}
+  .theme-dark .footer-link svg path {
+    fill: #FCFCFC;
+  }
+  .theme-dark .footer-link:hover {
+    color: #1CB7E0;
+  }
+    .theme-dark .footer-link:hover svg path {
+      fill: #1CB7E0;
+    } 
