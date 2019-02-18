@@ -22,7 +22,7 @@
 
 .theme-dark {
   --primary-text-color: #FCFCFC;
-  --section-border-color: #444444;
+  --section-border-color: #1E1E1E;
   --body-background-color: #222222;
 
   --search-background: rgba(255,255,255,0.05);
@@ -126,7 +126,7 @@ body {
   }
   .note:focus {
     outline: 0;
-    color: var(--accent-dark-color);
+    color: var(--accent-color-dark);
   }
   .note-content {
     white-space: nowrap;
