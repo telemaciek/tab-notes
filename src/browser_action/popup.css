@@ -1,3 +1,42 @@
+:root {
+  --accent-color: #1CB7E0;
+  --accent-color-dark: #337B99;
+
+  --primary-text-color: #222222;
+  --section-border-color: #F0F0F0;
+  --body-background-color: #FCFCFC;
+
+  --search-background: rgba(255,255,255,0);
+  --search-placeholder-text-color: #A9A9A9;
+
+  --notes-list-background-color: var(--section-border-color);
+  --notes-container-background-color: #FFFFFF;
+  --notes-container-background-color-hover: #F8F8F8;
+  --note-delete-background-color-hover: rgba(0,0,0,0.05);
+  --note-delete-action-color-hover: #D04202;
+
+  --footer-links-background-color: #F8F8F8;
+  --footer-link-color: var(--primary-text-color);
+  --footer-link-color-hover: var(--accent-color);
+}
+
+.theme-dark {
+  --primary-text-color: #FCFCFC;
+  --section-border-color: #444444;
+  --body-background-color: #222222;
+
+  --search-background: rgba(255,255,255,0.05);
+  --search-placeholder-text-color: #BBBBBB;
+
+  --notes-list-background-color: var(--section-border-color);
+  --notes-container-background-color: #333333;
+  --notes-container-background-color-hover: #393939;
+  --note-delete-background-color-hover: rgba(255,255,255,0.05);
+
+  --footer-links-background-color: rgba(255,255,255,0.05);
+  --footer-link-color: var(--primary-text-color);
+}
+
 * {
   box-sizing: border-box;
   /* Cool trick to make sure all your elements behave properly: */
@@ -13,56 +52,44 @@ body {
   min-width: 400px;
   padding: 30px 0 70px 0;
   font-family: "Helvetica Neue", sans-serif;
-  background: #FCFCFC;
+  background: var(--body-background-color);
   padding-top: 0;
   padding-bottom: 42px;
 }
-body.theme-dark {
-  background: #222222;
-}
-
 
 .search {
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
   display: block;
+  color: var(--primary-text-color);
   outline: 0;
   border: 0;
-  border-bottom: solid 1px #F0F0F0;
-  background: rgba(255,255,255,0);
+  border-bottom: solid 1px var(--section-border-color);
+  background: var(--search-background);
   line-height: 50px;
   font-size: 13px;
   padding: 0 15px;
 }
-.theme-dark .search {
-  color: #FCFCFC;
-  background-color: #222222;
-  border-color: #333333;
-}
-  .theme-dark .search::placeholder {
-    color: #BBBBBB;
+  .search::placeholder {
+    color: var(--search-placeholder-text-color);
   }
-
 
 .notes-list {
   margin: 0px;
   margin: 0 auto;
   border: 0;
   width: 450px;
-  background-color: #F0F0F0;
+  background-color: var(--notes-list-background-color);
   overflow: hidden;
-}
-.theme-dark .notes-list {
-  background-color: #222222
 }
 
 .note-container {
-  background: #FFFFFF;
+  background-color: var(--notes-container-background-color);
   display:flex;
   flex-direction: row;
   cursor: pointer;
-  border-bottom: solid 1px #F0F0F0;
+  border-bottom: solid 1px var(--section-border-color);
   transition: background-color 0.1s;
 }
   .note-container:first-child {
@@ -73,16 +100,8 @@ body.theme-dark {
     margin-bottom: 0;
   }
   .note-container:hover {
-    background-color: #F8F8F8;
+    background-color: var(--notes-container-background-color-hover);
   }
-.theme-dark .note-container {
-  background-color: #333333;
-  border-color: #222222;
-}
-  .theme-dark .note-container:hover {
-    background-color: #444444;
-  }
-  
 
 .note {
   display:flex;
@@ -92,14 +111,14 @@ body.theme-dark {
   min-height: 48px;
   min-width: 0;
   text-decoration: none;
-  color: #222;
+  color: var(--primary-text-color);
   position: relative;
 }
   .note:focus::before {
     display: block;
     width: 4px;
     height: 100%;
-    background: #1CB7E0;
+    background:var(--accent-color);
     content: "";
     position: absolute;
     top: 0;
@@ -107,7 +126,7 @@ body.theme-dark {
   }
   .note:focus {
     outline: 0;
-    color: #337B99;
+    color: var(--accent-dark-color);
   }
   .note-content {
     white-space: nowrap;
@@ -124,13 +143,6 @@ body.theme-dark {
   .note-size {
     margin-left: 10px;
   }
-
-.theme-dark .note-content {
-  color: #FCFCFC;
-}
-.theme-dark .note-extra {
-  color: #DDDDDD;
-}
 
 .note-actions {
   display: flex;
@@ -151,20 +163,16 @@ body.theme-dark {
     border-radius: 20px;
   }
   .note-delete:hover {
-    background-color: rgba(0,0,0,0.05);
+    background-color: var(--note-delete-background-color-hover);
     border-radius: 0px;
   }
-    .theme-dark .note-delete:hover {
-      background-color: rgba(255,255,255,0.05);
-    }
   .note-delete:hover path {
-    fill: #d04202;
+    fill: var(--note-delete-action-color-hover);
   }
 
-
 .footer-links {
-  background: #F8F8F8;
-  border-top: solid 1px #EEEEEE;
+  background: var(--footer-links-background-color);
+  border-top: solid 1px var(--section-border-color);
   position: fixed;
   height: 44px;
   width: 100%;
@@ -172,17 +180,13 @@ body.theme-dark {
   text-align: center;
   line-height: 44px;
 }
-.theme-dark .footer-links {
-  background-color: #222222;
-  border-color: #333333;
-}
 
 .footer-link {
   position: relative;
   display: inline-block;
   padding: 0px 20px 0 40px;
   text-decoration: none;
-  color: #333333;
+  color: var(--footer-link-color);
 }
   .footer-link svg {
     position: absolute;
@@ -190,20 +194,11 @@ body.theme-dark {
     left: 12px;
   }
   .footer-link:hover {
-    color: #1CB7E0;
+    color: var(--footer-link-color-hover);
   }
-    .footer-link:hover svg path {
-      fill: #1CB7E0;
+    .footer-link svg path {
+      fill: var(--footer-link-color);
     }
-.theme-dark .footer-link {
-  color: #FCFCFC; 
-}
-  .theme-dark .footer-link svg path {
-    fill: #FCFCFC;
-  }
-  .theme-dark .footer-link:hover {
-    color: #1CB7E0;
-  }
-    .theme-dark .footer-link:hover svg path {
-      fill: #1CB7E0;
-    } 
+    .footer-link:hover svg path {
+      fill: var(--footer-link-color-hover);
+    }
