@@ -35,7 +35,7 @@ function initiateNote() {
 
   function showNote(noteId) {
     var note = getNote(noteId);
-    noteContainer.innerText = note.content;
+    noteContainer.innerHTML = note.content;
   }
   
   function startAutosaving() {
