@@ -44,22 +44,24 @@ function initiateNote() {
       e.preventDefault();
 
       // Save sanitized html with selected tags available for new lines and simple formatting
-      // var noteText = e.target.innerHTML;
-      var noteText = sanitizeHtml(e.target.innerHTML, { allowedTags: ["strong", "b", "i", "div", "em", "br"], allowedAttributes: {} });
+      var noteText = sanitizeHtml(
+        e.target.innerHTML, 
+        { allowedTags: ["strong", "b", "i", "div", "em", "br"], allowedAttributes: {} });
 
       // Display sanitized title and amount of text
-      // var sanitizedTitle = noteText.substring(0, 20);
-      var sanitizedTitle = sanitizeHtml(noteText.substring(0, 20), { allowedTags: [], allowedAttributes: {} });
-
       saveNote(noteId, noteText);
-      setDocumentTitle(sanitizedTitle);
+      setDocumentTitle(noteText);
       setProperFavicon(noteText.length);
     }, 250);
 
     noteContainer.addEventListener("input", debouncedSave)
   }
 
-  function setDocumentTitle(content) {
+  function setDocumentTitle(contentHtml) {
+    // sanitize a greater portion of the content than the desired title substring 
+    //  length to avoid incomplete html elements, e.g., "&lt;", left unsanitized
+    var content = sanitizeHtml(contentHtml.substring(0, 40), { allowedTags: [], allowedAttributes: {} }).substring(0, 20);
+
     switch (true) {
       case (content === ""):
       case (content === "\n"):
@@ -143,10 +145,8 @@ function initiateNote() {
   setTheme();
   showNote(noteId);
 
-  var initialHTML = sanitizeHtml(noteContainer.innerHTML.substring(0, 20), { allowedTags: [], allowedAttributes: {} });
-
-  setDocumentTitle(initialHTML);
-  setProperFavicon(initialHTML.length);
+  setDocumentTitle(noteContainer.innerHTML);
+  setProperFavicon(noteContainer.innerHTML.length);
 
   // Launch autosaving... also start changing title and favicon
   startAutosaving();
