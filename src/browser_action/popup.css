@@ -23,17 +23,17 @@
 .theme-dark {
   --primary-text-color: #FCFCFC;
   --section-border-color: #1E1E1E;
-  --body-background-color: #222222;
+  --body-background-color: #2A2A2A;
 
   --search-background: rgba(255,255,255,0.05);
   --search-placeholder-text-color: #BBBBBB;
 
   --notes-list-background-color: var(--section-border-color);
-  --notes-container-background-color: #333333;
+  --notes-container-background-color: #2A2A2A;
   --notes-container-background-color-hover: #393939;
   --note-delete-background-color-hover: rgba(255,255,255,0.05);
 
-  --footer-links-background-color: rgba(255,255,255,0.05);
+  --footer-links-background-color: #2A2A2A;
   --footer-link-color: var(--primary-text-color);
 }
 
