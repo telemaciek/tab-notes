@@ -1,64 +1,22 @@
+import * as notesStorage from '../common/notesStorage.js';
+import * as settingsStorage from '../common/settingsStorage.js';
+
 function initiateNote() {
   var noteContainer = document.getElementById('js-note-container');
   var noteId = window.location.hash.substring(1);
-
   noteContainer.focus();
-
-  function newStorageObj() {
-    var json = {};
-    json.version = "1";
-    json.notes = {};
-    return json;
-  }
-
-  function migrate(oldStorageObj) {
-    newStorageObj = newStorageObj();
-    var newNotesObj = newStorageObj.notes;
-    for (key in oldStorageObj) {
-      newNotesObj[key] = {};
-      newNotesObj[key].content = oldStorageObj[key];
-      newNotesObj[key].dateCreated = Date.now();
-      newNotesObj[key].dateModified = Date.now();
-    }
-    localStorage.setItem('notesStorage', JSON.stringify(newStorageObj));
-    return newStorageObj;
-  }
-
-  function getNotes() {
-    
-    var storageString = localStorage.getItem("notesStorageHTML");
-
-    if (!storageString) {
-      storageString = localStorage.getItem("notesStorage");
-    }
-
-    var storageObj = {};
-    if (storageString != null) {
-      storageObj = JSON.parse(storageString);
-    }
-
-    if (!Object.keys(storageObj).length) {
-      storageObj = newStorageObj();
-    }
-    if (storageObj.version === undefined) {
-      storageObj = migrate(storageObj);
-    }
-
-    return storageObj.notes || {};
-  }
-
-  function newNote(noteId) {
+  
+  function newNote() {
     var note = {};
     note.content = "";
+    note.formatVersion = "1.1";
     note.dateModified = Date.now();
     note.dateCreated = Date.now();
     return note;
   }
 
   function getNote(noteId) {
-    var notesObj = getNotes();
-    note = notesObj[noteId] || newNote(noteId);
-    return note;
+    return notesStorage.getObj().notes[noteId] || newNote();
   }
 
   function saveNote(noteId, noteContent) {
@@ -70,12 +28,9 @@ function initiateNote() {
   }
 
   function setNotes(noteId, note) {
-    var notesObj = getNotes();
-    notesObj[noteId] = note;
-    var storageObj = {}
-    storageObj.version = "1.1";
-    storageObj.notes = notesObj;
-    localStorage.setItem('notesStorageHTML', JSON.stringify(storageObj));
+    var storageObj = notesStorage.getObj();
+    storageObj.notes[noteId] = note;
+    notesStorage.set(storageObj)
   }
 
   function showNote(noteId) {
@@ -89,22 +44,24 @@ function initiateNote() {
       e.preventDefault();
 
       // Save sanitized html with selected tags available for new lines and simple formatting
-      // var noteText = e.target.innerHTML;
-      var noteText = sanitizeHtml(e.target.innerHTML, { allowedTags: ["strong", "b", "i", "div", "em", "br"], allowedAttributes: {} });
+      var noteText = sanitizeHtml(
+        e.target.innerHTML, 
+        { allowedTags: ["strong", "b", "i", "div", "em", "br"], allowedAttributes: {} });
 
       // Display sanitized title and amount of text
-      // var sanitizedTitle = noteText.substring(0, 20);
-      var sanitizedTitle = sanitizeHtml(noteText.substring(0, 20), { allowedTags: [], allowedAttributes: {} });
-
       saveNote(noteId, noteText);
-      setDocumentTitle(sanitizedTitle);
+      setDocumentTitle(noteText);
       setProperFavicon(noteText.length);
     }, 250);
 
     noteContainer.addEventListener("input", debouncedSave)
   }
 
-  function setDocumentTitle(content) {
+  function setDocumentTitle(contentHtml) {
+    // sanitize a greater portion of the content than the desired title substring 
+    //  length to avoid incomplete html elements, e.g., "&lt;", left unsanitized
+    var content = sanitizeHtml(contentHtml.substring(0, 40), { allowedTags: [], allowedAttributes: {} }).substring(0, 20);
+
     switch (true) {
       case (content === ""):
       case (content === "\n"):
@@ -158,13 +115,41 @@ function initiateNote() {
     };
   };
 
-  // Set it up for the first time
+  function setTheme()
+  {
+    var cachedSettingsObj = settingsStorage.getObj();
+    var noteContainer = document.getElementById("js-note-container");
+
+    if (cachedSettingsObj.darkMode)
+    {
+      noteContainer.classList.add("theme-dark")
+    }
+
+    window.addEventListener('storage', function(e) {  
+      if (e.key == "settingsStorage")
+      {
+          var updatedSettingsObj = settingsStorage.getObj();
+
+          if (updatedSettingsObj.darkMode && !cachedSettingsObj.darkMode) {
+            noteContainer.classList.add("theme-dark");
+          }
+          else if (!updatedSettingsObj.darkMode && cachedSettingsObj.darkMode) {
+            noteContainer.classList.remove("theme-dark");
+          }
+
+          cachedSettingsObj = updatedSettingsObj;
+      }
+    });
+  }
+
+  setTheme();
   showNote(noteId);
-  var initialHTML = sanitizeHtml(noteContainer.innerHTML.substring(0, 20), { allowedTags: [], allowedAttributes: {} });
-  setDocumentTitle(initialHTML);
-  setProperFavicon(initialHTML.length);
+
+  setDocumentTitle(noteContainer.innerHTML);
+  setProperFavicon(noteContainer.innerHTML.length);
 
   // Launch autosaving... also start changing title and favicon
   startAutosaving();
 }
+
 window.addEventListener('load', initiateNote);

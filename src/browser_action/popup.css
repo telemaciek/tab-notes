@@ -1,3 +1,42 @@
+:root {
+  --accent-color: #1CB7E0;
+  --accent-color-dark: #337B99;
+
+  --primary-text-color: #222222;
+  --section-border-color: #F0F0F0;
+  --body-background-color: #FCFCFC;
+
+  --search-background: rgba(255,255,255,0);
+  --search-placeholder-text-color: #A9A9A9;
+
+  --notes-list-background-color: var(--section-border-color);
+  --notes-container-background-color: #FFFFFF;
+  --notes-container-background-color-hover: #F8F8F8;
+  --note-delete-background-color-hover: rgba(0,0,0,0.05);
+  --note-delete-action-color-hover: #D04202;
+
+  --footer-links-background-color: #F8F8F8;
+  --footer-link-color: var(--primary-text-color);
+  --footer-link-color-hover: var(--accent-color);
+}
+
+.theme-dark {
+  --primary-text-color: #FCFCFC;
+  --section-border-color: #1E1E1E;
+  --body-background-color: #222222;
+
+  --search-background: rgba(255,255,255,0.05);
+  --search-placeholder-text-color: #BBBBBB;
+
+  --notes-list-background-color: var(--section-border-color);
+  --notes-container-background-color: #333333;
+  --notes-container-background-color-hover: #393939;
+  --note-delete-background-color-hover: rgba(255,255,255,0.05);
+
+  --footer-links-background-color: rgba(255,255,255,0.05);
+  --footer-link-color: var(--primary-text-color);
+}
+
 * {
   box-sizing: border-box;
   /* Cool trick to make sure all your elements behave properly: */
@@ -13,9 +52,7 @@ body {
   min-width: 400px;
   padding: 30px 0 70px 0;
   font-family: "Helvetica Neue", sans-serif;
-  background: #fcfcfc;
-}
-body.default { /* popup */
+  background: var(--body-background-color);
   padding-top: 0;
   padding-bottom: 42px;
 }
@@ -25,36 +62,34 @@ body.default { /* popup */
   max-width: 640px;
   margin: 0 auto;
   display: block;
+  color: var(--primary-text-color);
   outline: 0;
   border: 0;
-  background: rgba(255,255,255,0);
+  border-bottom: solid 1px var(--section-border-color);
+  background: var(--search-background);
   line-height: 50px;
   font-size: 13px;
   padding: 0 15px;
 }
-.default .search {
-  border-bottom: solid 1px #f0f0f0;
-}
+  .search::placeholder {
+    color: var(--search-placeholder-text-color);
+  }
 
 .notes-list {
   margin: 0px;
-  max-width: 640px;
   margin: 0 auto;
-  border: solid 1px #f0f0f0;
-  background-color: #f0f0f0;
-  overflow: hidden;
-}
-.default .notes-list { /* popup */
   border: 0;
   width: 450px;
+  background-color: var(--notes-list-background-color);
+  overflow: hidden;
 }
 
 .note-container {
-  background: #fff;
+  background-color: var(--notes-container-background-color);
   display:flex;
   flex-direction: row;
   cursor: pointer;
-  margin-bottom: 1px;
+  border-bottom: solid 1px var(--section-border-color);
   transition: background-color 0.1s;
 }
   .note-container:first-child {
@@ -65,8 +100,9 @@ body.default { /* popup */
     margin-bottom: 0;
   }
   .note-container:hover {
-    background-color: #F8F8F8;
+    background-color: var(--notes-container-background-color-hover);
   }
+
 .note {
   display:flex;
   flex-direction: column;
@@ -75,14 +111,14 @@ body.default { /* popup */
   min-height: 48px;
   min-width: 0;
   text-decoration: none;
-  color: #222;
+  color: var(--primary-text-color);
   position: relative;
 }
   .note:focus::before {
     display: block;
     width: 4px;
     height: 100%;
-    background: #1CB7E0;
+    background:var(--accent-color);
     content: "";
     position: absolute;
     top: 0;
@@ -90,7 +126,7 @@ body.default { /* popup */
   }
   .note:focus {
     outline: 0;
-    color: #337B99;
+    color: var(--accent-color-dark);
   }
   .note-content {
     white-space: nowrap;
@@ -105,9 +141,9 @@ body.default { /* popup */
     padding-top: 2px;
   }
   .note-size {
-    /*float: right;*/
     margin-left: 10px;
   }
+
 .note-actions {
   display: flex;
   flex-direction: row;
@@ -127,16 +163,16 @@ body.default { /* popup */
     border-radius: 20px;
   }
   .note-delete:hover {
-    background-color: rgba(0,0,0,0.05);
+    background-color: var(--note-delete-background-color-hover);
     border-radius: 0px;
   }
   .note-delete:hover path {
-    fill: #d04202;
+    fill: var(--note-delete-action-color-hover);
   }
 
 .footer-links {
-  background: #F8F8F8;
-  border-top: solid 1px #eee;
+  background: var(--footer-links-background-color);
+  border-top: solid 1px var(--section-border-color);
   position: fixed;
   height: 44px;
   width: 100%;
@@ -144,21 +180,25 @@ body.default { /* popup */
   text-align: center;
   line-height: 44px;
 }
-.export-link {
+
+.footer-link {
   position: relative;
   display: inline-block;
   padding: 0px 20px 0 40px;
   text-decoration: none;
-  color: #333;
+  color: var(--footer-link-color);
 }
-  .export-link svg {
+  .footer-link svg {
     position: absolute;
     top: 12px;
     left: 12px;
   }
-  .export-link:hover {
-    color: #1CB7E0;
+  .footer-link:hover {
+    color: var(--footer-link-color-hover);
   }
-    .export-link:hover svg path {
-      fill: #1CB7E0;
+    .footer-link svg path {
+      fill: var(--footer-link-color);
+    }
+    .footer-link:hover svg path {
+      fill: var(--footer-link-color-hover);
     }
