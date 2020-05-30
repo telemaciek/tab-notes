@@ -9,7 +9,7 @@
     "128": "images/icon_128.png"
   },
   "chrome_url_overrides" : {
-    "newtab": "newtab/newtab.html"
+    "newtab": "newtab/note.html"
   },
   "browser_action": {
     "default_popup": "browser_action/popup.html",

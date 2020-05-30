@@ -3,7 +3,7 @@ import * as settingsStorage from '../common/settingsStorage.js';
 
 function initiateNote() {
   var noteContainer = document.getElementById('js-note-container');
-  var noteId = window.location.hash.substring(1);
+  var noteId = window.location.hash.substring(1) || getUniqueId();
   noteContainer.focus();
   
   function newNote() {
@@ -140,6 +140,11 @@ function initiateNote() {
           cachedSettingsObj = updatedSettingsObj;
       }
     });
+  }
+
+  function getUniqueId() {
+    var date = new Date();
+    return date.getTime();
   }
 
   setTheme();
